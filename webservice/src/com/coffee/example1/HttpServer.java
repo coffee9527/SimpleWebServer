@@ -16,7 +16,7 @@ public class HttpServer {
 	 * from where the java command was invoke.
 	 */
 	
-	public static final String WEB_ROOT = System.getProperty("user.dir")+File.separator+"webroot";
+	public static final String WEB_ROOT = System.getProperty("user.dir")+File.separator+"WebRoot";
 	private static final String SHUTDOWN_COMMAND = "/SHUTDOWN";
 	private boolean shutdown = false;
 	
@@ -44,9 +44,12 @@ public class HttpServer {
 				output = socket.getOutputStream();
 				//create Request object and parse
 				Request request = new Request(input);
+				request.parse();
 				
 				//create Response object
 				Response reqsponse = new Response(output);
+				reqsponse.setRequest(request);
+				reqsponse.sendStaticResource();
 			}catch(Exception e) {
 				e.printStackTrace();
 				continue;
