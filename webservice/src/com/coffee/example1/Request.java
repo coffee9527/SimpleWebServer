@@ -1,5 +1,7 @@
 package com.coffee.example1;
 
+import java.io.IOException;
+
 /*import java.io.InputStream;
 
 public class Request {
@@ -79,7 +81,7 @@ public class Request {
         } catch (Exception e) {  
             e.printStackTrace();  
             i=-1;  
-        }  
+        }
         for(int j=0;j<i;j++){  
             request.append((char)buffer[j]);  
         }  

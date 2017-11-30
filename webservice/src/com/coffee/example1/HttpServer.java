@@ -17,8 +17,8 @@ public class HttpServer {
 	 */
 	
 	public static final String WEB_ROOT = System.getProperty("user.dir")+File.separator+"WebRoot";
-	private static final String SHUTDOWN_COMMAND = "/SHUTDOWN";
-	private boolean shutdown = false;
+//	private static final String SHUTDOWN_COMMAND = "/SHUTDOWN";
+//	private boolean shutdown = false;
 	
 	public static void main(String[] args) {
 		HttpServer server = new HttpServer();
@@ -34,12 +34,12 @@ public class HttpServer {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		while(!shutdown) {
-			Socket socket = null;
-			InputStream input = null;
-			OutputStream output = null;
-			try {
-				socket = serverSocket.accept();
+		Socket socket = null;
+		InputStream input = null;
+		OutputStream output = null;
+		try {
+			while(true) {
+				socket = serverSocket.accept();//监听并接受连接//没有关闭
 				input = socket.getInputStream();
 				output = socket.getOutputStream();
 				//create Request object and parse
@@ -50,10 +50,12 @@ public class HttpServer {
 				Response reqsponse = new Response(output);
 				reqsponse.setRequest(request);
 				reqsponse.sendStaticResource();
-			}catch(Exception e) {
-				e.printStackTrace();
-				continue;
+				//input.close(); 该对象在Request中使用完没有关闭
+				//output.close();该对象已在Response中使用完关闭
 			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			//continue;
 		}
 	}
 }
