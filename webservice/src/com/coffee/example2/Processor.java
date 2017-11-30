@@ -14,7 +14,7 @@ public class Processor extends Thread{
 	private PrintStream out;
 	private Socket socket;
 	private InputStream in;
-	public Processor(Socket socket) {//没有关闭
+	public Processor(Socket socket) {
 		this.socket = socket;
 		try {
 			out = new PrintStream(socket.getOutputStream());
@@ -24,7 +24,7 @@ public class Processor extends Thread{
 		}
 	}
 	
-	public String parse(InputStream in) {//此流没有关闭
+	public String parse(InputStream in) {
 		BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		String filename = "";
 		try {
