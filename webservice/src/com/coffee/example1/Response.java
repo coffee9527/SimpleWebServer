@@ -94,10 +94,14 @@ public class Response {
             if(file.exists()){  
                 fis=new FileInputStream(file);  
                 int ch=fis.read(bytes,0,BUFFER_SIZE);  
+                String http = "HTTP/1.1 200\r\n" + "Content-Type: text/html\r\n" + "Content-Length: " + file.length() + "\r\n" + "\r\n";
+                output.write(http.getBytes());
                 while(ch!=-1){  
                     output.write(bytes, 0, BUFFER_SIZE);  
                     ch=fis.read(bytes, 0, BUFFER_SIZE);  
                 }  
+                output.flush();
+                output.close();
             }else{  
                 //file not found  
                 String errorMessage="HTTP/1.1 404 File Not Found\r\n"+  
@@ -106,6 +110,8 @@ public class Response {
                 "\r\n"+  
                 "<h1>File Not Found</h1>";  
                 output.write(errorMessage.getBytes());  
+                output.flush();
+                output.close();
             }  
         } catch (Exception e) {  
             System.out.println(e.toString());  
